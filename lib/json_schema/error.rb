@@ -46,7 +46,9 @@ module JsonSchema
       # TODO: change to named optional arguments when Ruby 1.9 support is
       # removed
       @data = options[:data]
-      @sub_errors = options[:sub_errors]
+      @sub_errors = options[:sub_errors].map do |group|
+        group.map(&:call)
+      end if options[:sub_errors]
     end
 
     def pointer
